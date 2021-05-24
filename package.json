@@ -1,0 +1,39 @@
+{
+  "name": "game-zombie-api",
+  "version": "1.0.0",
+  "description": "API for game CRUD operations on zombies and their inventory and transaction related to their item exchange",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaskier/game-zombie-api"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "Express",
+    "MongoDB",
+    "CRUD",
+    "Cloud"
+  ],
+  "author": "Wojciech Iskierka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaskier/game-zombie-api/issues"
+  },
+  "homepage": "https://github.com/zaskier/game-zombie-api#readme",
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-plugin-import": "^2.22.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15"
+  }
+}
