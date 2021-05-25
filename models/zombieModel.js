@@ -6,10 +6,10 @@ const zombieModel = new Schema(
 	{
 		name : { type: String , unique : true, required : true },
 		creationDate : {type: Date, default: Date.now},
-		valueOfItems: [{ 
-			pln : Number,
-			eu : Number,
-			usd: Number }],
+		valueOfItems: { 
+			pln : Number, 
+			eur : Number,
+			usd: Number },
 		items: {
 			type: [{
 				id : Number,
