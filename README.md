@@ -5,6 +5,7 @@ It is using.
 Aplication calculates total value of items for every zombie in: USD, Eu, pln.
 Application gets items price in pln from API https://zombie-items-api.herokuapp.com/api/items
 Application gets currency rates from API http://api.nbp.pl/api/exchangerates/tables/C/today/
+- Rates for other currencies are calculated by 	Bid – calculated currency buy exchange rate 
 - app can work locally or be hosted on Cloud Services
 - application works with CRUD operations using MongoDB
 - application is formated wit ESLint
@@ -44,7 +45,7 @@ git clone  https://github.com/zaskier/game-zombie-api.git
       "valueOfItems" :  {
              "pln": 21,
              "usd": 34,
-             "eu": 41
+             "eur": 41
            },
     "items":[
         {"id":1,"name":"Diamond Sword","price":100},
@@ -67,7 +68,7 @@ git clone  https://github.com/zaskier/game-zombie-api.git
             "_id": "60abd9b28ea12d536869c47f",
             "pln": 21,
             "usd": 34,
-            "eu": 41
+            "eur": 41
         }
     ],
     "items": [
@@ -105,9 +106,9 @@ git clone  https://github.com/zaskier/game-zombie-api.git
 }
    ```
   - [GET /zombie/[?name=name]](#get-name) - get's all elements but it can be also filtered by optional URL parameter "name"
-   ## Operation on specified record  {http://localhost:8080}/api/weather/{_id} 
-  - [GET /weather/[entryID]](#get-entryID) -  gets entry 
-  - [PUT /weather/[entryID]](#put-entryID)  - modifies entry
+   ## Operation on specified record  {http://localhost:8080}/api/zombie/{_id} 
+  - [GET /zombie/[entryID]](#get-entryID) -  gets entry 
+  - [PUT /zombie/[entryID]](#put-entryID)  - modifies entry
       - request body
   ```
 
