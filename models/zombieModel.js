@@ -10,16 +10,20 @@ const zombieModel = new Schema(
 			pln : Number, 
 			eur : Number,
 			usd: Number },
-		items: {
+		items: { 
 			type: [{
 				id : Number,
 				name : String,
 				price : Number
 			}],
+			
 			validate: [arrayLimit, 'zombie exceeds the limit of 5 items']
 		}
 
+
 	}
+	
+ 
 );
 
 function arrayLimit(val) {
