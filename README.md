@@ -145,6 +145,5 @@ git clone  https://github.com/zaskier/game-zombie-api.git
 - example unit tests are made with Mocha
 - Integration Test's are made with Supertest to start them type in terminal
 ```
-TO BE ADDED
-
+⦁ npm test
 ```
