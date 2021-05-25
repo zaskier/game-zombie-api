@@ -1,0 +1,4 @@
+{
+	"exchangeRatesURL":"http://api.nbp.pl/api/exchangerates/tables/C/today/",
+	"itemURL":"https://zombie-items-api.herokuapp.com/api/items"
+}
