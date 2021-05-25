@@ -1,31 +1,11 @@
 const express = require('express');
-
+const zombieController = require('../controllers/zombieController.js');
 function routes(Zombie){
 	const zombieRouter= express.Router();
+	const controller = zombieController(Zombie);
 	zombieRouter.route('/zombie')
-		.get((req, res)=>{
-
-			const query = {};
-			if (req.query._id) {
-				query._id = req.query._id;
-			}
-			Zombie.find(query, (err, zombie) =>{
-				if(err){
-					return res.send(err);
-				}
-				else{
-					return res.json(zombie);
-				}
-			});
-		})
-		.post((req, res) => {
-			const zombie = new Zombie(req.body);
-			console.log('zombie was added');
-			console.log(zombie);
-			zombie.save();
-			return res.status(201).json(zombie);
-		});
-
+		.get(controller.get)
+		.post(controller.post)
 	zombieRouter.use('/zombie/:name', (req, res, next) =>{
 		Zombie.findById(req.params.name, (err, zombie) => {
 			if (err) {
@@ -45,18 +25,19 @@ function routes(Zombie){
 			res.json(req.zombie);
 		})
 		.put((req, res) => {
+			req.zombie.save((err) => {
+				if (err) {
+					return res.json(zombie);
+				}
+				return res.json(zombie);
+			});
 			const {zombie} = req;
 			zombie.name = req.body.name;
 			zombie.valueOfItems.pln = req.body.valueOfItems.pln;
 			zombie.valueOfItems.eu = req.body.valueOfItems.eu;
 			zombie.valueOfItems.usd = req.body.valueOfItems.usd;
 			zombie.valueOfItems = zombie.valueOfItems.find(o => o.name === req.body.valueOfItems.name);
-			req.zombie.save((err) => {
-				if (err) {
-					return res.json(zombie);
-				}
-				return res.json(zombie);
-			});})
+		})
 		.patch((req, res) =>{
 			const {zombie} = req;
 			if (req.body._id){
@@ -70,7 +51,7 @@ function routes(Zombie){
 			});
 			req.zombie.save((err) => {
 				if (err) {
-					return res.json(zombie);
+					return res.json(err);
 				}
 				return res.json(zombie);
 			});
