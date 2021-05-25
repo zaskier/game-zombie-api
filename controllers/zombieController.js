@@ -5,12 +5,29 @@ function zombieController(Zombie){
 		const zombie = new Zombie(req.body);
 		async function postEntry(){
 			let status;
-			const zombieApiResponse =  await fetch(`${config.itemURL}`) //get current items list
+			const itemsApiResponse =  await fetch(`${config.itemURL}`) //get current items list
 				.then((res) => { 
 					status = res.status; 
 					return res.json(); 
 				});
-			console.log(zombieApiResponse);
+
+			//console.log(itemsApiResponse);
+
+			// var dataString;
+			var yesterday = new Date(Date.now() - 86400000); //rates should be calculated by yesterday(today rates does not seem to always work(to be tested for next version))
+			var apiExhangeRates =await fetch(`${config.exchangeRatesURL}${yesterday.toISOString().slice(0, 10)}/?format=json`)
+				.then((res) => { 
+					status = res.status; 
+					return res.json(); 
+				});
+			console.log(apiExhangeRates[0].rates);
+			var rateUSD = apiExhangeRates[0].rates.find( ({ code }) => code == 'USD');
+			rateUSD = rateUSD.bid;
+			console.log('current USD bid rate : '+rateUSD);
+			var rateEUR = apiExhangeRates[0].rates.find( ({ code }) => code == 'EUR');
+			rateEUR = rateEUR.bid;
+			console.log('current EUR bid rate : '+rateEUR);
+
 			if (status !== 200) { 
 				
 				console.log(`Error : there was an isssue with item API, ${config.itemURL} list of items is not working`);
@@ -29,20 +46,20 @@ function zombieController(Zombie){
 				let itemsPrice = 0;
 				zombie.items.forEach(element =>{
 					console.log(element.name);
-					var found = zombieApiResponse.items.find( ({ name }) => name === element.name);
+					var found = itemsApiResponse.items.find( ({ name }) => name === element.name);
 					if (typeof found != 'undefined') {
-						console.log(found);
-						console.log(itemsPrice);
-						console.log(found.price);
+						// console.log(found);
+						// console.log(itemsPrice);
+						// console.log(found.price);
 						itemsPrice = itemsPrice+found.price;
 					}else{
 						console.log('Item name : '+found+ ` was not found in ${config.itemURL}`);
 					}
 				} );
 				zombie.valueOfItems['pln']=itemsPrice;
-				// zombie.valueOfItems['usd']=itemsPrice*usd; TODO
-				// zombie.valueOfItems['eu']=itemsPrice*eu; 
-				console.log('item price is : '+itemsPrice);
+				zombie.valueOfItems['usd']=itemsPrice*rateUSD;
+				zombie.valueOfItems['eur']=itemsPrice*rateEUR;
+				console.log('item price is : '+itemsPrice+'pln');
 				console.log('zombie was created');
 				console.log(zombie);
 				zombie.save();
